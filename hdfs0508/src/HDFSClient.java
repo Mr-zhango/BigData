@@ -125,7 +125,7 @@ public class HDFSClient {
 
         //执行删除命令
         //fileSystem.delete(new Path("/user/atguigu/output/xiaoxiong.txt"),true);
-        fileSystem.delete(new Path("/user/atguigu/xiyou123.txt"),true);
+        fileSystem.delete(new Path("/user/"),true);
         //关闭资源
 
         //3.关闭文件系统
