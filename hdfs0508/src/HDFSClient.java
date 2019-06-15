@@ -1,5 +1,5 @@
-package cn.myfreecloud.hdfs;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.FsPermission;
@@ -8,8 +8,12 @@ import org.junit.Test;
 import java.net.URI;
 
 public class HDFSClient {
+
+    private static Log logger = LogFactory.getLog(HDFSClient.class);
+
+
     public static void main(String[] args) throws Exception {
-        //System.out.println("hello");
+        System.out.println("------开始向HDFS上上传文件-------");
         //文件系统的配置信息
         Configuration configuration = new Configuration();
 
@@ -21,11 +25,12 @@ public class HDFSClient {
         FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration, "atguigu");
 
         //2.本地文件拷贝到集群
-        fileSystem.copyFromLocalFile(new Path("e:/xiyou.txt"), new Path("/user/atguigu/xiyou1.txt"));
+        fileSystem.copyFromLocalFile(new Path("e:/xiyou.txt"), new Path("/user/atguigu/xiyou123.txt"));
 
         //3.关闭文件系统
 
         fileSystem.close();
+        System.out.println("------文件上传结束-------");
 
     }
 
@@ -119,8 +124,8 @@ public class HDFSClient {
         FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "atguigu");
 
         //执行删除命令
-        fileSystem.delete(new Path("/user/atguigu/output/xiaoxiong.txt"),true);
-
+        //fileSystem.delete(new Path("/user/atguigu/output/xiaoxiong.txt"),true);
+        fileSystem.delete(new Path("/user/atguigu/xiyou123.txt"),true);
         //关闭资源
 
         //3.关闭文件系统
