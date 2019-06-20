@@ -7,6 +7,9 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * 必须实现WritableComparable接口
+ */
 public class FlowSortBean implements WritableComparable<FlowSortBean> {
 
 

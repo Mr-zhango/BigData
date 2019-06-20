@@ -6,6 +6,15 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
+/**
+ * 收入数据:
+ * LongWritable:行号
+ * Text:每一行的内容
+ *
+ * 输出数据:
+ * Text:手机号
+ * FlowBean:流量对象
+ */
 public class FlowMapper extends Mapper<LongWritable, Text, Text, FlowBean> {
 
     //创建bean对象

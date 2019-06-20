@@ -6,11 +6,16 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
+/**
+ * @author zhangyang
+ *
+ */
 public class FlowSortMapper extends Mapper<LongWritable, Text, FlowSortBean,Text> {
 
     //创建bean对象
     FlowSortBean flowSortBean = new FlowSortBean();
 
+    //value
     Text v = new Text();
 
 
@@ -24,17 +29,16 @@ public class FlowSortMapper extends Mapper<LongWritable, Text, FlowSortBean,Text
 
         //3.封装bean对象,以及获取电话号的key(电话号码)
 
-
         //上行流量
-        long upFlow = Long.parseLong(fields[1]);
+        long upFlow = Long.parseLong(fields[fields.length -3]);
 
         //下行流量
-        long downFlow = Long.parseLong(fields[2]);
+        long downFlow = Long.parseLong(fields[fields.length -2]);
 
         flowSortBean.set(upFlow, downFlow);
 
         //设置电话号码
-        v.set(fields[0]);
+        v.set(fields[1]);
         //4.写出去
         context.write(flowSortBean,v);
     }

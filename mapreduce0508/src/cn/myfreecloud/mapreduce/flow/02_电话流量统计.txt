@@ -1,0 +1,3 @@
+如果reduceTask的数量> getPartition的结果数，则会多产生几个空的输出文件part-r-000xx；
+如果1<reduceTask的数量<getPartition的结果数，则有一部分分区数据无处安放，会Exception；
+如果reduceTask的数量=1，则不管mapTask端输出多少个分区文件，最终结果都交给这一个reduceTask，最终也就只会产生一个结果文件 part-r-00000；

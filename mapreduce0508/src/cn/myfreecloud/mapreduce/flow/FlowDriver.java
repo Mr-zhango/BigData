@@ -37,9 +37,9 @@ public class FlowDriver {
 
         /*******/
         //6.设置分区
-//        job.setPartitionerClass(FlowPartition.class);
-//        //根据设置到的 0-4五个分区进行任务的调度
-//        job.setNumReduceTasks(5);
+        job.setPartitionerClass(FlowPartition.class);
+        //根据设置到的 0-4五个分区进行任务的调度
+        job.setNumReduceTasks(5);
         /*******/
 
 
