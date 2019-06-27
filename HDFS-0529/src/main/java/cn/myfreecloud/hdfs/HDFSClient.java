@@ -1,3 +1,5 @@
+package cn.myfreecloud.hdfs;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
@@ -22,10 +24,10 @@ public class HDFSClient {
         //1.获取文件系统
         //FileSystem fileSystem = FileSystem.get(configuration);
 
-        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration, "atguigu");
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration, "root");
 
         //2.本地文件拷贝到集群
-        fileSystem.copyFromLocalFile(new Path("e:/xiyou.txt"), new Path("/user/atguigu/xiyou123.txt"));
+        fileSystem.copyFromLocalFile(new Path("e:/xiyou.txt"), new Path("/user/input/xiyou.txt"));
 
         //3.关闭文件系统
 
@@ -61,7 +63,7 @@ public class HDFSClient {
         FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
 
         //执行上传命令(是否删除源文件)
-        fileSystem.copyFromLocalFile(true,new Path("e:/wordcount.txt"),new Path("/input/wordcount.txt"));
+        fileSystem.copyFromLocalFile(true,new Path("e:/hello.txt"),new Path("/input/hello.txt"));
         //关闭资源
 
         //3.关闭文件系统
@@ -100,10 +102,10 @@ public class HDFSClient {
         Configuration configuration = new Configuration();
 
         //1.获取文件系统
-        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "atguigu");
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
 
         //执行创建文件夹命令
-        fileSystem.mkdirs(new Path("/user/atguigu/duoji/mulu"));
+        fileSystem.mkdirs(new Path("/input"));
 
         //关闭资源
 
@@ -125,7 +127,7 @@ public class HDFSClient {
 
         //执行删除命令
         //fileSystem.delete(new Path("/user/atguigu/output/xiaoxiong.txt"),true);
-        fileSystem.delete(new Path("/output/"),true);
+        fileSystem.delete(new Path("/hbase"),true);
         //关闭资源
 
         //3.关闭文件系统
@@ -162,7 +164,7 @@ public class HDFSClient {
         Configuration configuration = new Configuration();
 
         //1.获取文件系统
-        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "atguigu");
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
 
         //2.执行查看文件操作(true)表示进行迭代
         RemoteIterator<LocatedFileStatus> locatedFileStatusRemoteIterator = fileSystem.listFiles(new Path("/"), true);
