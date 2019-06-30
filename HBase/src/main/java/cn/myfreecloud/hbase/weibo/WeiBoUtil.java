@@ -3,6 +3,9 @@ package cn.myfreecloud.hbase.weibo;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.filter.CompareFilter;
+import org.apache.hadoop.hbase.filter.RowFilter;
+import org.apache.hadoop.hbase.filter.SubstringComparator;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import java.io.IOException;
@@ -196,7 +199,149 @@ public class WeiBoUtil {
 
     //取消关注用户
 
+    /**
+     *
+     * @param uid
+     * @param uids
+     * @throws IOException
+     */
+    public static void delAttend(String uid,String... uids) throws IOException {
+        //获取连接
+        Connection connection = ConnectionFactory.createConnection(configuration);
+
+        //获取二张表对象
+        Table relationTable = connection.getTable(TableName.valueOf(Constant.RELATIONS));
+
+        Table inboxTable = connection.getTable(TableName.valueOf(Constant.INBOX));
+
+        //创建删除人的删除对象
+        Delete relationDelete = new Delete(Bytes.toBytes(uid));
+
+        //取消关注多个人
+        ArrayList<Delete> fansDeleteList = new ArrayList<>();
+
+        //删除自己关注的人attends
+        for (String s : uids) {
+            //被取关者对象
+            Delete fansDelete = new Delete(Bytes.toBytes(s));
+
+
+            //对应人的粉丝表中去掉这个数据
+            //指定列族
+            relationDelete.addColumn(Bytes.toBytes("fans"),Bytes.toBytes(uid));
+
+            relationDelete.addColumn(Bytes.toBytes("attends"), Bytes.toBytes(s));
+
+            fansDeleteList.add(fansDelete);
+        }
+        fansDeleteList.add(relationDelete);
+        //执行删除操作
+        relationTable.delete(fansDeleteList);
+
+
+        //创建一个收件箱delete对象
+        Delete inboxDelete = new Delete(Bytes.toBytes(uid));
+
+        for (String s : uids) {
+            inboxDelete.addColumn(Bytes.toBytes("info"),Bytes.toBytes(s));
+        }
+
+        //收件箱表删除操作
+        inboxTable.delete(inboxDelete);
+
+        //关闭资源
+        inboxTable.close();
+        relationTable.close();
+        connection.close();
+    }
+
     //获取微博内容(初始化页面)
+    public static void getInit(String uid) throws IOException {
+        //获取连接
+        Connection connection = ConnectionFactory.createConnection(configuration);
+
+        //获取表对象
+        //获取三张表对象
+        Table contTable = connection.getTable(TableName.valueOf(Constant.CONTENT));
+
+        Table relationTable = connection.getTable(TableName.valueOf(Constant.RELATIONS));
+
+        Table inboxTable = connection.getTable(TableName.valueOf(Constant.INBOX));
+
+
+        //获取收件箱表的数据
+        Get get = new Get(Bytes.toBytes(uid));
+
+        //设置版本号
+        get.setMaxVersions();
+
+        //
+        Result result = inboxTable.get(get);
+
+        ArrayList<Get> getArrayList = new ArrayList<>();
+
+
+        Cell[] cells = result.rawCells();
+
+        for (Cell cell : cells) {
+            Get get1 = new Get(CellUtil.cloneValue(cell));
+            getArrayList.add(get1);
+        }
+        //根据收件箱表数据去往内容表获取微博内容
+        Result[] results = contTable.get(getArrayList);
+
+        for (Result result1 : results) {
+            Cell[] cells1 = result1.rawCells();
+            for (Cell cell : cells1) {
+                System.out.println("rowKey:"+ Bytes.toString(CellUtil.cloneRow(cell))
+                        +",Content:"+ Bytes.toString(CellUtil.cloneValue(cell)));
+            }
+        }
+
+
+        //关闭资源
+        inboxTable.close();
+
+        contTable.close();
+
+        connection.close();
+
+
+
+
+    }
+
 
     //获取微博内容(查看某个人所有的微博内容)
+    public static void getData(String uid) throws IOException {
+        //获取连接
+        Connection connection = ConnectionFactory.createConnection(configuration);
+
+        //获取二张表对象
+        Table contentTable = connection.getTable(TableName.valueOf(Constant.CONTENT));
+
+        Scan scan = new Scan();
+        //过滤数据
+        RowFilter rowFilter = new RowFilter(CompareFilter.CompareOp.EQUAL,new SubstringComparator(uid+"_"));
+
+        scan.setFilter(rowFilter);
+
+        ResultScanner results = contentTable.getScanner(scan);
+
+        for (Result result : results) {
+            Cell[] cells = result.rawCells();
+
+            for (Cell cell : cells) {
+
+                System.out.println("rowKey:"+ Bytes.toString(CellUtil.cloneRow(cell))
+                        +",Content:"+ Bytes.toString(CellUtil.cloneValue(cell)));
+            }
+        }
+
+        //关闭资源
+        contentTable.close();
+
+        connection.close();
+
+    }
 }
