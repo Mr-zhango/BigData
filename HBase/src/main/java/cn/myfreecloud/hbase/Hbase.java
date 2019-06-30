@@ -53,7 +53,8 @@ public class Hbase {
     static {
         //使用HBaseConfiguration的单例方法实例化
         configuration = HBaseConfiguration.create();
-        configuration.set("hbase.zookeeper.quorum", "192.168.1.20");
+
+
         //configuration.set("hbase.zookeeper.property.clientPort", "2181");
 
         try {
