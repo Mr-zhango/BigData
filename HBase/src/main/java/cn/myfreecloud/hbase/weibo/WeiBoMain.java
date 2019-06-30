@@ -39,13 +39,18 @@ public class WeiBoMain {
         //WeiBoUtil.addAttend("1001","1002","1003");
 
         //获取1001初始化页面信息(查询1002的收件箱信息)
+//        WeiBoUtil.getInit("1001");
+//
+//        //1003发布微博
+//        WeiBoUtil.createData("1003","我是1003,这是1001已经关注我的时候我发的这一个2333微博1003");
+//
+//        System.out.println("-------------------------");
+        //获取1001初始化页面信息
         WeiBoUtil.getInit("1001");
 
-        //1003发布微博
-        WeiBoUtil.createData("1003","我是1003,这是1001已经关注我的时候我发的这一个2333微博1003");
+        //取消关注
+        WeiBoUtil.delAttend("1001","1002");
 
-        System.out.println("-------------------------");
-        //获取1001初始化页面信息
         WeiBoUtil.getInit("1001");
     }
 }
