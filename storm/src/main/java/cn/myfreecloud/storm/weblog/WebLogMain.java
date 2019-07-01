@@ -34,11 +34,7 @@ public class WebLogMain {
         if(args.length > 0){
             try {
                 StormSubmitter.submitTopology(args[0],config,topologyBuilder.createTopology());
-            } catch (AlreadyAliveException e) {
-                e.printStackTrace();
-            } catch (InvalidTopologyException e) {
-                e.printStackTrace();
-            } catch (AuthorizationException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }else{
