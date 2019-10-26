@@ -10,7 +10,7 @@ import java.util.Properties;
  * @date:2019/6/29 10:44
  * @description:
  */
-public class ConsumerProducer {
+public class NewProducer {
 
     public static void main(String[] args) {
 

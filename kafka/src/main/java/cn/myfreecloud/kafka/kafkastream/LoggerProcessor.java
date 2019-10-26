@@ -10,6 +10,7 @@ import org.apache.kafka.streams.processor.ProcessorContext;
  */
 public class LoggerProcessor implements Processor<byte[],byte[]> {
 
+    // 上下文对象
     private ProcessorContext context;
 
     /**
@@ -29,20 +30,37 @@ public class LoggerProcessor implements Processor<byte[],byte[]> {
     @Override
     public void process(byte[] bytes, byte[] bytes2) {
         //获取一行数据
+        // 1. 获取数据
         String line = new String(bytes2);
         //去除">>>"
-        String s = line.replaceAll(">>>", "");
+        // 2. 处理数据
+        /*String s = line.replaceAll(">>>", "");
 
-        byte[] bytesResult = s.getBytes();
+        byte[] bytesResult = s.getBytes();*/
 
-        context.forward(bytes,bytesResult);
+        if(line.contains(">>>")){
+            String[] split = line.split(">>>");
+            String trim = split[1].trim();
+            // 输出数据
+            context.forward(bytes,trim.getBytes());
+        }else{
+            // 不包含的话就原样输出
+            context.forward(bytes,bytes2);
+        }
     }
 
+    /**
+     * 处理与实践戳相关的
+     * @param l
+     */
     @Override
     public void punctuate(long l) {
 
     }
 
+    /**
+     * 关闭资源
+     */
     @Override
     public void close() {
 

@@ -13,7 +13,7 @@ import java.util.Properties;
  * @date: 2019/6/29 12:16
  * @description: 一个消费者可以消费多个生产者的数据
  */
-public class CustomerConsumer {
+public class NewConsumer {
     public static void main(String[] args) {
 
         //所有的配置信息
