@@ -30,6 +30,10 @@ public class PvBolt1 implements IRichBolt {
         this.collector = collector;
     }
 
+    /**
+     * 具体的业务处理
+     * @param tuple
+     */
     public void execute(Tuple tuple) {
         //获取数据
         String line = tuple.getString(0);
@@ -37,6 +41,7 @@ public class PvBolt1 implements IRichBolt {
         //截取
         String[] split = line.split("\t");
 
+        // 得到session_id
         String sessionId = split[1];
         if(sessionId!=null){
             //局部的累加

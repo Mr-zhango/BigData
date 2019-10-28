@@ -32,7 +32,7 @@ public class PvSpout implements IRichSpout {
 
         try {
             try {
-                reader = new BufferedReader(new InputStreamReader(new FileInputStream("e:/website.log"), "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(new FileInputStream("D:/website.log"), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
