@@ -22,6 +22,7 @@ public class WordCountSplitBolt extends BaseRichBolt {
 
 
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector collector) {
+        // 并联spout
         this.collector = collector;
     }
 

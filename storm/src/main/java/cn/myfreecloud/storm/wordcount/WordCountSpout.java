@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author: zhangyang
  * @date: 2019/7/1 15:59
- * @description: 数据源
+ * @description: 数据源spout
  */
 public class WordCountSpout extends BaseRichSpout {
 
@@ -27,9 +27,9 @@ public class WordCountSpout extends BaseRichSpout {
     public void nextTuple() {
         //循环发射数据
 
-        //发射数据
+        //发射数据 单发:单收
         collector.emit(new Values("I am ximengqing love jinlian"));
-        //演示0.5s
+        //延时0.5s
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {

@@ -12,10 +12,12 @@ import java.util.Map;
 /**
  * @author: zhangyang
  * @date: 2019/7/1 16:18
- * @description:
+ * @description: 单词统计的结点:BOLT:阀门
  */
 public class WordCountBolt extends BaseRichBolt {
-    //key:单词 value:出现的次数
+    /**
+     * key:单词 value:出现的次数
+     */
     private Map<String,Integer> map = new HashMap<String, Integer>();
 
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
@@ -23,7 +25,9 @@ public class WordCountBolt extends BaseRichBolt {
     }
 
     public void execute(Tuple tuple) {
-        //获取传递过来的数据
+        /**
+         * 获取传递过来的数据
+         */
         String word = tuple.getString(0);
 
         Integer num = tuple.getInteger(1);

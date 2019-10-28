@@ -8,6 +8,8 @@ import org.apache.storm.topology.TopologyBuilder;
  * @author: zhangyang
  * @date: 2019/7/1 17:38
  * @description:
+ *              pv:就是 page views count(session_id) 页面总的浏览量
+ *              uv:就是 user views count(distinct session_id) 页面的独立访客数目
  */
 public class PvMain {
     public static void main(String[] args) {

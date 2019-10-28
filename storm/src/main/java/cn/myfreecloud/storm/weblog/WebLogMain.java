@@ -11,22 +11,23 @@ import org.apache.storm.topology.TopologyBuilder;
 /**
  * @author: zhangyang
  * @date: 2019/7/1 14:13
- * @description:
+ * @description: 链接spout和bolt的拓扑驱动
  */
 public class WebLogMain {
     public static void main(String[] args) {
-        //1.创建拓扑
+        //1.创建拓扑 拼接spout和bolt
 
         TopologyBuilder topologyBuilder = new TopologyBuilder();
 
+        // 一个线程读取数据
         topologyBuilder.setSpout("WebLogSpout",new WebLogSpout(),1);
-
-
+        // 两个线程处理数据
         topologyBuilder.setBolt("WebLogBolt",new WebLogBolt(),2).shuffleGrouping("WebLogSpout");
 
         //2.创建配置信息对象
         Config config = new Config();
 
+        // 设置开启的worker数目
         config.setNumWorkers(2);
 
         //3.提交程序
@@ -38,8 +39,9 @@ public class WebLogMain {
                 e.printStackTrace();
             }
         }else{
-         //在本地运行
+            //在本地运行
             LocalCluster localCluster = new LocalCluster();
+            // 提交的任务的拓扑名称
             localCluster.submitTopology("webtopology",config,topologyBuilder.createTopology());
         }
     }

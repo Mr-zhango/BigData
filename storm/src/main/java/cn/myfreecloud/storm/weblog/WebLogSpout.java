@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * @author: zhangyang
  * @date: 2019/7/1 11:57
- * @description:
+ * @description:  Spout 水管,数据的输入源
  */
 public class WebLogSpout implements IRichSpout {
 
@@ -24,17 +24,27 @@ public class WebLogSpout implements IRichSpout {
     private BufferedReader bufferedReader;
 
     private SpoutOutputCollector collector = null;
+
     private String str = null;
 
 
+    /**
+     * 打开资源
+     * 通过这个SpoutOutputCollector 把spout数据弹射到bolt
+     *
+     * @param map
+     * @param topologyContext
+     * @param collector
+     */
     @SuppressWarnings("rawtypes")
     public void open(Map map, TopologyContext topologyContext, SpoutOutputCollector collector) {
 
         // 打开输入的文件
         try {
+
             this.collector = collector;
 
-            this.bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("e:/website.log"), "UTF-8"));
+            this.bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D:/website.log"), "UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,6 +52,9 @@ public class WebLogSpout implements IRichSpout {
     }
 
 
+    /**
+     * 下一个元组
+     */
     public void nextTuple() {
 
         //打开文件
@@ -52,6 +65,7 @@ public class WebLogSpout implements IRichSpout {
                 // 发射出去
                 collector.emit(new Values(str));
 
+                // 休息1ms
 				Thread.sleep(1000);
             }
         } catch (Exception e) {
@@ -60,7 +74,10 @@ public class WebLogSpout implements IRichSpout {
     }
 
 
-
+    /**
+     * 声明发送到下一级spout的数据类型
+     * @param outputFieldsDeclarer
+     */
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
         // 声明输出字段类型
         outputFieldsDeclarer.declare(new Fields("log"));

@@ -11,25 +11,35 @@ import java.util.Map;
 /**
  * @author: zhangyang
  * @date: 2019/7/1 12:55
- * @description:
+ * @description: bolt:阀门,数据的处理组件
  */
 public class WebLogBolt implements IRichBolt {
 
     private static final long serialVersionUID = 1L;
-    private OutputCollector collector = null;
+    // 总共多少数据
     private int line_num = 0;
-    private String valueString = null;
 
 
+    /**
+     * 准备工作
+     * @param map
+     * @param topologyContext
+     * @param outputCollector
+     */
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
 
     }
 
+    /**
+     * 执行
+     * @param input
+     */
     public void execute(Tuple input) {
         //执行方法
 
         //1.获取数据
        // valueString = input.getStringByField("log");
+        // 接收传递过来的0个数据,单个输入和多个输入都能使用
         String string = input.getString(0);
 
         //www.myfreecloud.cn	VVVYH6Y4V4SFXZ56JIPDPB4V678	2017-08-07 08:40:51
