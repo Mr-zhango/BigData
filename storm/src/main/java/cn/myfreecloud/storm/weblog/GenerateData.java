@@ -11,10 +11,15 @@ import java.util.Random;
  * @description:
  */
 public class GenerateData {
+
+    /**
+     * 手动创造网站访问的数据,这个其实可以用nginx来做
+     * @param args
+     */
     public static void main(String[] args) {
 
         //准备文件
-        File logFile = new File("e:/website.log");
+        File logFile = new File("D:/website.log");
 
 
         // 1 网站名称
@@ -31,7 +36,8 @@ public class GenerateData {
 
         Random random = new Random();
 
-        for (int i = 0; i < 200; i++) {
+        // 造数据
+        for (int i = 0; i < 30; i++) {
             sbBuffer.append(hosts[0] + "\t" + session_id[random.nextInt(5)] + "\t" + time[random.nextInt(8)] + "\n");
         }
 
