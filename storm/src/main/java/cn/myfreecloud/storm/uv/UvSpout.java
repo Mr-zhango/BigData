@@ -29,7 +29,7 @@ public class UvSpout implements IRichSpout {
 
         //读取文件
         try {
-            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("e:/website.log")));
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream("D:/website.log")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

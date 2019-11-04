@@ -136,6 +136,26 @@ public class HDFSClient {
     }
 
     /**
+     * 在集群上删除文件
+     */
+    @Test
+    public void deleteFilrAtDFS() throws Exception{
+        //0创建配置信息对象
+        Configuration configuration = new Configuration();
+
+        //1.获取文件系统
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
+
+        //执行删除命令
+        fileSystem.delete(new Path("/event_logs/2019/"),true);
+        //关闭资源
+
+        //3.关闭文件系统
+
+        fileSystem.close();
+    }
+
+    /**
      * 更改文件名称
      */
     @Test

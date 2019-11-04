@@ -1,5 +1,4 @@
-package cn.myfreecloud.function
-
+package cn.myfreecloud.function1
 
 /**
   * map和FlatMap的区别

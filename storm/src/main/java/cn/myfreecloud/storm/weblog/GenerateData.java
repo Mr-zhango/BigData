@@ -31,6 +31,10 @@ public class GenerateData {
         String[] time = { "2017-08-07 08:40:50", "2017-08-07 08:40:51", "2017-08-07 08:40:52", "2017-08-07 08:40:53",
                 "2017-08-07 09:40:49", "2017-08-07 10:40:49", "2017-08-07 11:40:49", "2017-08-07 12:40:49" };
 
+        // 3 访问网站的ip地址:
+        String[] ips = { "192.168.1.1", "192.168.1.2", "192.168.1.3", "192.168.1.4",
+                "192.168.1.5", "192.168.1.6", "192.168.1.7", "192.168.1.8" };
+
         // 4 拼接网站访问日志
         StringBuffer sbBuffer = new StringBuffer();
 
@@ -38,7 +42,7 @@ public class GenerateData {
 
         // 造数据
         for (int i = 0; i < 30; i++) {
-            sbBuffer.append(hosts[0] + "\t" + session_id[random.nextInt(5)] + "\t" + time[random.nextInt(8)] + "\n");
+            sbBuffer.append(hosts[0] + "\t" + session_id[random.nextInt(5)] + "\t" + time[random.nextInt(8)] +  "\t"+ ips[random.nextInt(8)]+ "\n");
         }
 
         // 5 判断log日志是否存在，不存在要创建
