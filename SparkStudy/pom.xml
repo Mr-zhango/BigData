@@ -18,7 +18,7 @@
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
-           <!-- <scope>provided</scope>-->
+            <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
@@ -39,6 +39,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!--Scala项目 支持 使用插件-->
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>

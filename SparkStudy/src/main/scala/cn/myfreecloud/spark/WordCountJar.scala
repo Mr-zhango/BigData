@@ -1,24 +1,31 @@
 package cn.myfreecloud.spark
-import org.apache.spark.{SparkConf,SparkContext}
+import org.apache.spark.rdd.RDD
+import org.apache.spark.{SparkConf, SparkContext}
 
 object WordCountJar extends App{
 
 
-  val sparkConfig = new SparkConf().setAppName("WordCountJar")
+  //设置Spark计算框架的运行环境
+  val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("WordCountLocalDemo")
 
-  val sparkContext = new SparkContext(sparkConfig)
+  //创建sparkContext,该对象是spark APP的入口
+  val sc = new SparkContext(sparkConfig)
 
-  val file = sparkContext.textFile("hdfs://hadoop102:8020/README.txt")
+  // hadoop上的路径
+  //val file = sc.textFile("/opt/module/spark/input")
+
+  val file = sc.textFile("file:///opt/module/spark/input")
 
   // 切分字符
-  val words = file.flatMap(_.split(""))
+  val words: RDD[String] = file.flatMap(_.split(" "))
 
   // 转化为元组的形式
   val wordsTuple = words.map((_,1))
 
   // 使用reduce操作来进行计算
-  wordsTuple.reduceByKey(_+_).saveAsTextFile("hdfs://hadoop102:8020/sparkoutcode")
+  val wordToSum: RDD[(String,Int)] = wordsTuple.reduceByKey(_+_)
 
-  sparkContext.stop()
+  wordToSum.collect().foreach(println)
+  sc.stop()
 
 }

@@ -63,7 +63,7 @@ public class HDFSClient {
         FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
 
         //执行上传命令(是否删除源文件)
-        fileSystem.copyFromLocalFile(true,new Path("e:/hello.txt"),new Path("/input/hello.txt"));
+        fileSystem.copyFromLocalFile(true,new Path("D:/access_20191106_112805.log"),new Path("/event_logs/2019/11/06"));
         //关闭资源
 
         //3.关闭文件系统
@@ -127,8 +127,9 @@ public class HDFSClient {
 
         //执行删除命令
         //fileSystem.delete(new Path("/user/atguigu/output/xiaoxiong.txt"),true);
-        fileSystem.delete(new Path("/hbase"),true);
+        fileSystem.delete(new Path("/event_logs/2019/11/06/access_20191106_112805.log"),true);
         //关闭资源
+//        	access_20191106_112805.log
 
         //3.关闭文件系统
 
@@ -147,7 +148,7 @@ public class HDFSClient {
         FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
 
         //执行删除命令
-        fileSystem.delete(new Path("/event_logs/2019/"),true);
+        fileSystem.delete(new Path("/event_logs/"),true);
         //关闭资源
 
         //3.关闭文件系统
