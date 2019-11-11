@@ -31,6 +31,6 @@ object Spark02_Oper03_MapPartitionsWithIndex {
 
     tupleRDD.collect.foreach(println)
 
-    sc.stop();
+    sc.stop()
   }
 }

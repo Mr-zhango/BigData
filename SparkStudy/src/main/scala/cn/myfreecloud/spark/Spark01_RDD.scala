@@ -43,5 +43,7 @@ object Spark01_RDD {
 
     fileRDD.saveAsTextFile("output")
 
+    sc.stop()
+
   }
 }

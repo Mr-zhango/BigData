@@ -24,7 +24,7 @@ object Spark02_Oper09_Distinct {
      */
     filterRDD.saveAsTextFile("output")
 
-    sc.stop();
+    sc.stop()
   }
 
 }

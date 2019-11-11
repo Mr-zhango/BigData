@@ -26,6 +26,6 @@ object Spark02_Oper01_map {
 
     mapRDD.collect().foreach(println)
 
-    sc.stop();
+    sc.stop()
   }
 }

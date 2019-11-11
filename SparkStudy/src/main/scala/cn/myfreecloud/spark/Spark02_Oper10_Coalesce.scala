@@ -24,6 +24,6 @@ object Spark02_Oper10_Coalesce {
     println("缩减分区之后:"+listRDD.coalesce(3).partitions.size)
 
 
-    sc.stop();
+    sc.stop()
   }
 }

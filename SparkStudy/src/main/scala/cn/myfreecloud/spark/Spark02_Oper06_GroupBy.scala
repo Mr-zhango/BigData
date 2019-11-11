@@ -21,6 +21,6 @@ object Spark02_Oper06_GroupBy {
 
     groupRDD.collect().foreach(println)
 
-    sc.stop();
+    sc.stop()
   }
 }

@@ -37,6 +37,6 @@ object Spark02_Oper02_MapPartion {
 
     mapPartitionsRDD.collect().foreach(println)
 
-    sc.stop();
+    sc.stop()
   }
 }

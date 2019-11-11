@@ -25,6 +25,6 @@ object Spark02_Oper08_Sample {
 
     filterRDD.collect().foreach(println)
 
-    sc.stop();
+    sc.stop()
   }
 }

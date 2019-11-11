@@ -19,7 +19,7 @@ object Spark02_Oper04_FlatMap {
 
     flatMapRDD.collect().foreach(println)
 
-    sc.stop();
+    sc.stop()
 
   }
 }

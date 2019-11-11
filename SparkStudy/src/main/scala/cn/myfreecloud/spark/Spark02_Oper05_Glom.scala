@@ -24,7 +24,7 @@ object Spark02_Oper05_Glom {
       println(array.mkString(","))
     })
 
-    sc.stop();
+    sc.stop()
 
   }
 
