@@ -9,7 +9,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object Spark02_Oper19_GroupByKey {
   def main(args: Array[String]): Unit = {
 
-    val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Spark02_Oper17_PartitionBy")
+    val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Spark02_Oper19_GroupByKey")
 
     val sc = new SparkContext(sparkConfig)
 

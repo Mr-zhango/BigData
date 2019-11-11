@@ -5,11 +5,12 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
  * 1. 在一个(K,V)的RDD上调用，返回一个(K,V)的RDD，使用指定的reduce函数，将相同key的值聚合到一起，reduce任务的个数可以通过第二个可选的参数来设置。
  * 2. 需求：创建一个pairRDD，取出每个分区相同的key的最大值,然后相加
+ * 难点是不同分区之间的数据进行相加
  */
 object Spark02_Oper21_AggregateByKey {
   def main(args: Array[String]): Unit = {
 
-    val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Spark02_Oper17_PartitionBy")
+    val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Spark02_Oper21_AggregateByKey")
 
     val sc = new SparkContext(sparkConfig)
 
