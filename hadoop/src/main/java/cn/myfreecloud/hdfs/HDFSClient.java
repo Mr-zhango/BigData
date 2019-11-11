@@ -105,7 +105,7 @@ public class HDFSClient {
         FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
 
         //执行创建文件夹命令
-        fileSystem.mkdirs(new Path("/input"));
+        fileSystem.mkdirs(new Path("/sparkDirectory"));
 
         //关闭资源
 
