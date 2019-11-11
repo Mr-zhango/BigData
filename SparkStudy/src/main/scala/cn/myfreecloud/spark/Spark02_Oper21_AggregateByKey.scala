@@ -25,6 +25,12 @@ object Spark02_Oper21_AggregateByKey {
     val value = rdd.aggregateByKey(0)(math.max(_,_)  ,_+_)
 
     value.collect().foreach(println)
+
+
+    // 相同分区内相同的key进行相加,不同分区内相同的key进行相加 wordCount
+    val value2 = rdd.aggregateByKey(0)(_+_,_+_)
+
+    value2.collect().foreach(println)
     sc.stop()
 
   }
