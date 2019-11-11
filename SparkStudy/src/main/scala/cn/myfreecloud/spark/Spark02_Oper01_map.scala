@@ -3,6 +3,10 @@ package cn.myfreecloud.spark
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
+
+/**
+ * 需求:创建一个1-10数组的RDD，将所有元素*2形成新的RDD
+ */
 object Spark02_Oper01_map {
   def main(args: Array[String]): Unit = {
     // 创建RDD
@@ -22,5 +26,6 @@ object Spark02_Oper01_map {
 
     mapRDD.collect().foreach(println)
 
+    sc.stop();
   }
 }

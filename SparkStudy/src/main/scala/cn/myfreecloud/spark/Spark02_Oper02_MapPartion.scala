@@ -3,10 +3,13 @@ package cn.myfreecloud.spark
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
 
+/**
+ * 需求:创建一个RDD，使每个元素*2组成新的RDD
+ */
 object Spark02_Oper02_MapPartion {
   def main(args: Array[String]): Unit = {
     //设置Spark计算框架的运行环境
-    val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Spark02_Oper01_map")
+    val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Spark02_Oper02_MapPartion")
 
     val sc = new SparkContext(sparkConfig)
 
@@ -34,5 +37,6 @@ object Spark02_Oper02_MapPartion {
 
     mapPartitionsRDD.collect().foreach(println)
 
+    sc.stop();
   }
 }
