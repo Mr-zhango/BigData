@@ -41,9 +41,10 @@ object Action_05_Serializable {
 
 /**
  * 使用继承,混入特质,还是要序列化
+ *
  * @param query
  */
-class Search(query: String)  extends Serializable{
+class Search(query: String) extends Serializable {
 
   //过滤出包含字符串的数据
   def isMatch(s: String): Boolean = {
