@@ -46,17 +46,6 @@ object Action_02_Collect {
 
     ints.foreach(println)
 
-
-    // aggregate
-
-    /**
-     * 1. 参数：(zeroValue: U)(seqOp: (U, T) ⇒ U, combOp: (U, U) ⇒ U)
-     * 2. 作用：aggregate函数将每个分区里面的元素通过seqOp和初始值进行聚合，
-     *    然后用combine函数将每个分区的结果和初始值(zeroValue)进行combine操作。这个函数最终返回的类型不需要和RDD中元素类型一致。
-     */
-
-
-
   }
 
 }
