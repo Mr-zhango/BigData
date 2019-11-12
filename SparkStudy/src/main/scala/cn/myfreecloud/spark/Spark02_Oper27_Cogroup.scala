@@ -21,5 +21,10 @@ object Spark02_Oper27_Cogroup {
 
     value.collect().foreach(println)
 
+
+    // Cogroup 和 join的区别就是
+    // Cogroup相当于 left join
+    // join 相当于 inner join
+
   }
 }
