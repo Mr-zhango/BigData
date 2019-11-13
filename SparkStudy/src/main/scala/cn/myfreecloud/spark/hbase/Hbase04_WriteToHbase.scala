@@ -14,12 +14,12 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
  * spark读取Hbase数据
  */
-object Hbase04_WriteToMysql {
+object Hbase04_WriteToHbase {
 
   def main(args: Array[String]): Unit = {
 
 
-    val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Hbase04_WriteToMysql")
+    val sparkConfig: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Hbase04_WriteToHbase")
 
     // 创建spark上下文对象
     val sc = new SparkContext(sparkConfig)
