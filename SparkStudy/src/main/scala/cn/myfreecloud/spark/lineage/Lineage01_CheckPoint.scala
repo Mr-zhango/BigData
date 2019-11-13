@@ -19,6 +19,7 @@ object Lineage01_CheckPoint {
 
     // 设定检查点的保存目录
 
+    // 副本一般保存在HDFS上
     sc.setCheckpointDir("checkpointDir")
 
     val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
