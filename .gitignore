@@ -3,3 +3,6 @@
 /*/.idea/
 /*/out/
 /*/*.iml
+/js_sdk/build/
+/js_sdk/classes/
+/*/*/rebel.xml
