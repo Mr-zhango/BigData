@@ -18,7 +18,7 @@ object StreamIng02_FileDataSource {
     val streamingContext = new StreamingContext(sparkConf, Seconds(5))
 
 
-    // 从指定的端口中采集数据 String 一行一行的数据
+    // 从指定文件夹中读取数据
     val fileDStreaming: DStream[String] = streamingContext.textFileStream("test")
 
     // 将采集的数据进行分解(扁平化)
