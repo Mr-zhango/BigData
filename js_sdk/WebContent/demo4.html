@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>测试页面4</title>
+<!-- 第二种js集成方式 -->
+<script type="text/javascript">
+(function(){
+    var _aelog_ = _aelog_ || window._aelog_ || [];
+    // 设置_aelog_相关属性
+    _aelog_.push(["memberId","itguigu"]);
+    window._aelog_ = _aelog_; // 作用，传递参数
+    (function(){
+        var aejs = document.createElement('script');
+        aejs.type = 'text/javascript';
+        aejs.async = true;
+        aejs.src = './js/analytics.js'; // 给定url
+        var script = document.getElementsByTagName('script')[0]; // 获取html页面中第一个script的标签
+        script.parentNode.insertBefore(aejs, script); // 插入新生成的script标签
+    })();
+})();
+</script>
+</head>
+<body>
+    测试页面4<br/>
+    在本页面设置memberid为itguigu<br/>
+    跳转到:
+    <a href="demo.html">demo</a>
+    <a href="demo2.html">demo2</a>
+    <a href="demo3.html">demo3</a>
+    <a href="demo4.html">demo4</a>
+</body>
+</html>

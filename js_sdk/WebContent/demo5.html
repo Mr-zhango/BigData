@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>测试页面5---产生事件数据</title>
+<script type="text/javascript" src="./js/analytics.js"></script>
+<script type="text/javascript">
+    var CookieUtil = {
+        // get the cookie of the key is name
+        get : function(name) {
+            var cookieName = encodeURIComponent(name) + "=", cookieStart = document.cookie
+                    .indexOf(cookieName), cookieValue = null;
+            if (cookieStart > -1) {
+                var cookieEnd = document.cookie.indexOf(";", cookieStart);
+                if (cookieEnd == -1) {
+                    cookieEnd = document.cookie.length;
+                }
+                cookieValue = decodeURIComponent(document.cookie.substring(
+                        cookieStart + cookieName.length, cookieEnd));
+            }
+            return cookieValue;
+        },
+        // set the name/value pair to browser cookie
+        set : function(name, value, expires, path, domain, secure) {
+            var cookieText = encodeURIComponent(name) + "="
+                    + encodeURIComponent(value);
+
+            if (expires) {
+                // set the expires time
+                var expiresTime = new Date();
+                expiresTime.setTime(expires);
+                cookieText += ";expires=" + expiresTime.toGMTString();
+            }
+
+            if (path) {
+                cookieText += ";path=" + path;
+            }
+
+            if (domain) {
+                cookieText += ";domain=" + domain;
+            }
+
+            if (secure) {
+                cookieText += ";secure";
+            }
+
+            document.cookie = cookieText;
+        },
+        setExt : function(name, value) {
+            this.set(name, value, new Date().getTime() + 315360000000, "/");
+        }
+    };
+
+    function generate(count) {
+        for (var i=0;i<count;i++) {
+            // 50%的几率更改会话id
+            if (GetRandomNum() > 4) {
+                // 设置cookie:bftrack_previsit的值为一年前即可
+                CookieUtil.setExt("bftrack_previsit", 123);
+            }
+
+            // 搜索转换事件流
+            __AE__.onEventDuration("搜索事件流", "搜索");
+            __AE__.onEventDuration("搜索事件流", "浏览搜索页面"); 
+            if (GetRandomNum() > 2) {
+                // 70%会访问详情页面
+                __AE__.onEventDuration("搜索事件流", "点击查看详情页"); 
+                __AE__.onEventDuration("搜索事件流", "详情页面浏览事件"); 
+                if (GetRandomNum() > 1) {
+                    // 80%产生多次访问点击课程详情情况，多次访问次数随机
+                    for (var j=0;j<GetRandomNum();j++) {
+                        // 可能产生多个点击课程详情面情况
+                        __AE__.onEventDuration("搜索事件流", "点击查看详情页"); 
+                        __AE__.onEventDuration("搜索事件流", "详情页面浏览事件"); 
+
+                        // 多次访问点击课程详情，可能触发订单产生事件
+                        if (GetRandomNum() > 8) {
+                            // 10%会产生订单
+                            __AE__.onEventDuration("搜索事件流", "点击立即购买事件"); 
+                        }
+                    }
+                }
+
+                if (GetRandomNum() > 6) {
+                    // 30%会产生订单，也就是说0.7*0.3=21%的几率会产生订单
+                    __AE__.onEventDuration("搜索事件流", "点击立即购买事件");
+                }
+            }
+
+            // 30%的几率更改会话id
+            if (GetRandomNum() > 6) {
+                // 设置cookie:bftrack_previsit的值为一年前即可
+                CookieUtil.setExt("bftrack_previsit", 123);
+            }
+
+            // 40%的几率直接产生详情页面浏览事件
+            if (GetRandomNum() > 5) {
+                // 30%产生订单事件
+                __AE__.onEventDuration("搜索事件流", "详情页面浏览事件"); 
+                if (GetRandomNum() > 4) {
+                    __AE__.onEventDuration("搜索事件流", "点击立即购买事件");
+                }
+            }
+        }
+    };
+
+    function GetRandomNum() {
+        // 产生一个0到9的随机数
+        var Range = 9;
+        var Rand = Math.random();
+        return Math.round(Rand * Range);
+    }
+</script>
+</head>
+<body>
+    <h1>测试页面：产生事件数据</h1>
+    <p>下述案例参考北风网的搜索</p>
+    <p>事件流只考虑在前端产生的事件，而且只有发生在同一个会话的事件才能算做事一个事件流。只产生一个事件流的数据：
+      <br/>搜索-->浏览搜索页面-->点击查看详情页-->详情页面浏览事件-->点击立即购买事件</p>
+    <br/>
+    <label>事件流数量：<input type="text" id="count"/></label>
+    <button id="btn" onclick="generate(document.getElementById('count').value)">触发chargeRequest事件</button><br/>
+    跳转到:
+    <a href="demo.html">demo</a>
+    <a href="demo2.html">demo2</a>
+    <a href="demo3.html">demo3</a>
+    <a href="demo4.html">demo4</a>
+</body>
+</html>
