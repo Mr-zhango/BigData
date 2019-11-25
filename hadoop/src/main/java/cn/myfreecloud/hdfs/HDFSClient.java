@@ -43,7 +43,7 @@ public class HDFSClient {
         Configuration configuration = new Configuration();
 
         //1.获取文件系统
-        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "atguigu");
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
 
         //打印文件系统
         System.out.println(fileSystem.toString());
@@ -60,10 +60,10 @@ public class HDFSClient {
         Configuration configuration = new Configuration();
 
         //1.获取文件系统
-        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:9000/"), configuration , "root");
 
         //执行上传命令(是否删除源文件)
-        fileSystem.copyFromLocalFile(true,new Path("D:/access_20191106_112805.log"),new Path("/event_logs/2019/11/06"));
+        fileSystem.copyFromLocalFile(true,new Path("D:/emp.txt"),new Path("/"));
         //关闭资源
 
         //3.关闭文件系统
@@ -123,11 +123,11 @@ public class HDFSClient {
         Configuration configuration = new Configuration();
 
         //1.获取文件系统
-        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:8020/"), configuration , "root");
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop102:9000/"), configuration , "root");
 
         //执行删除命令
         //fileSystem.delete(new Path("/user/atguigu/output/xiaoxiong.txt"),true);
-        fileSystem.delete(new Path("/event_logs/2019/11/06/access_20191106_112805.log"),true);
+        fileSystem.delete(new Path("/user/hive/warehouse/emp"),true);
         //关闭资源
 //        	access_20191106_112805.log
 
