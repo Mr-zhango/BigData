@@ -1,0 +1,13 @@
+{
+  "topic" : "test",
+  "partitions" : 3,
+  "consumerPropsFile" : "consumer_taxi.properties",
+  "processorConfs" : [
+    {
+      "transformer" : "com.atguigu.practice.transformer.TaxiOrderTopicQDBTransformer",
+      "timeDimensions" : ["D"],
+      "operator" : "qdb"
+    }
+  ]
+
+}
