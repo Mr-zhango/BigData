@@ -19,6 +19,8 @@ object MapPartitionsFunction {
 
     rdd.collect().foreach(println(_))
 
+    println("*****************************")
+
     val result = rdd.mapPartitions(partitionsFun)
 
     result.collect().foreach(println(_))
@@ -29,20 +31,21 @@ object MapPartitionsFunction {
 
   def partitionsFun(iter : Iterator[(String,String)]) : Iterator[String] = {
 
-    var woman = List[String]()
+    var womanList = List[String]()
 
-    woman.foreach("woman的值是:"+println(_))
+    //    woman的值是:
+    womanList.foreach(println(_))
 
     while (iter.hasNext){
 
       val next = iter.next()
 
       next match {
-        case (_,"female") => woman = next._1 :: woman
+        case (_,"female") => womanList = next._1 :: womanList
         case _ =>
       }
     }
-    woman.iterator
+    womanList.iterator
   }
 
 }
