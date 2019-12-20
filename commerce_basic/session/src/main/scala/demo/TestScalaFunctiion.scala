@@ -2,7 +2,7 @@ package demo
 
 import scala.collection.mutable
 
-object TEstScalaFunctiion {
+object TestScalaFunctiion {
 
   def main(args: Array[String]): Unit = {
 

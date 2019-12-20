@@ -64,6 +64,12 @@ object SessionStatisticAgg {
     // sessionId2FilterRDD： RDD[(sid, fullInfo)] 一个session对应一条数据，也就是一个fullInfo
     sessionRandomExtract(sparkSession, taskUUID, sessionId2FilterRDD)
   }
+
+  // 生成需要随机抽取的数据的list 索引
+  // extractPerDay      一天一共要抽取多少个
+  // daySessionCount    一天一共有多少个
+  // hourCountMap       每个小时有多少个
+  // hourListMap        结果list
   def generateRandomIndexList(extractPerDay:Long,
                               daySessionCount:Long,
                               hourCountMap:mutable.HashMap[String, Long],
@@ -79,14 +85,17 @@ object SessionStatisticAgg {
       val random = new Random()
 
       hourListMap.get(hour) match{
+          // 不存在
         case None => hourListMap(hour) = new ListBuffer[Int]
           for(i <- 0 until hourExrCount){
             var index = random.nextInt(count.toInt)
+            // 如果该索引已经存在了
             while(hourListMap(hour).contains(index)){
               index = random.nextInt(count.toInt)
             }
             hourListMap(hour).append(index)
           }
+          // 已经存在
         case Some(list) =>
           for(i <- 0 until hourExrCount){
             var index = random.nextInt(count.toInt)
@@ -99,9 +108,11 @@ object SessionStatisticAgg {
     }
   }
 
+  // 随机均匀的抽取session
   def sessionRandomExtract(sparkSession: SparkSession,
                            taskUUID: String,
                            sessionId2FilterRDD: RDD[(String, String)]): Unit = {
+    // 转化key为日期
     // dateHour2FullInfoRDD: RDD[(dateHour, fullInfo)]
     val dateHour2FullInfoRDD = sessionId2FilterRDD.map{
       case (sid, fullInfo) =>
@@ -177,6 +188,7 @@ object SessionStatisticAgg {
               val searchKeywords = StringUtils.getFieldFromConcatString(fullInfo, "\\|", Constants.FIELD_SEARCH_KEYWORDS)
               val clickCategories = StringUtils.getFieldFromConcatString(fullInfo, "\\|", Constants.FIELD_CLICK_CATEGORY_IDS)
 
+              // 封装成我们需要的对象
               val extractSession = SessionRandomExtract(taskUUID, sessionId, startTime, searchKeywords, clickCategories)
 
               extractSessionArrayBuffer += extractSession

@@ -28,12 +28,12 @@ object Spark02_Oper19_GroupByKey {
     })
 
 
+    println("***************************************************")
     //相当于reduceByKey
     val value = group.map(t => (t._1, t._2.sum))
 
 
     value.collect().foreach(println)
-
 
     sc.stop()
 
