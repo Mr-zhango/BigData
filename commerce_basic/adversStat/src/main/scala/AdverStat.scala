@@ -8,9 +8,8 @@ import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
-import org.apache.spark.streaming.{Duration, Minutes, Seconds, StreamingContext}
+import org.apache.spark.streaming.{Duration, Seconds, StreamingContext}
 
-import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 object AdverStat {
@@ -68,12 +67,66 @@ object AdverStat {
         }
     }
 
-    // 验证数据消费
-    // adRealTimeFilterDStream.foreachRDD(rdd => rdd.foreach(println(_)))
+    // 设置 sparkstreaming 保存全局数据的 checkpoint 目录
+    streamingContext.checkpoint("./spark-streaming")
+    // 设置checkpoint的时间间隔 2 批数据,checkpoint一次 每批数据5000ms
+    adRealTimeFilterDStream.checkpoint(Duration(10000))
+
     // 需求一：实时维护黑名单
     generateBlackList(adRealTimeFilterDStream)
+
+    // 需求二：各省各城市一天中的广告点击量（累积统计）
+    provinceCityClickStat(adRealTimeFilterDStream)
+
     streamingContext.start()
     streamingContext.awaitTermination()
+  }
+
+  def provinceCityClickStat(adRealTimeFilterDStream: DStream[String]) = {
+    // adRealTimeFilterDStream: DStream[RDD[String]]    String -> log : timestamp province city userid adid
+    // key2ProvinceCityDStream: DStream[RDD[key, 1L]]
+    val key2ProvinceCityDStream = adRealTimeFilterDStream.map{
+      case log =>
+        val logSplit = log.split(" ")
+        val timeStamp = logSplit(0).toLong
+        // dateKey : yyyy-mm-dd
+        val dateKey = DateUtils.formatDateKey(new Date(timeStamp))
+        val province = logSplit(1)
+        val city = logSplit(2)
+        val adid = logSplit(4)
+
+        val key = dateKey + "_" + province + "_" + city + "_" + adid
+        (key, 1L)
+    }
+
+    val key2StateDStream = key2ProvinceCityDStream.updateStateByKey[Long]{
+      (values:Seq[Long], state:Option[Long]) =>
+        var newValue = 0L
+        if(state.isDefined)
+          newValue = state.get
+        for(value <- values){
+          newValue += value
+        }
+        Some(newValue)
+    }
+
+    key2StateDStream.foreachRDD{
+      rdd => rdd.foreachPartition{
+        items =>
+          val adStatArray = new ArrayBuffer[AdStat]()
+          // key: date province city adid
+          for((key, count) <- items){
+            val keySplit = key.split("_")
+            val date = keySplit(0)
+            val province = keySplit(1)
+            val city = keySplit(2)
+            val adid = keySplit(3).toLong
+
+            adStatArray += AdStat(date, province, city, adid, count)
+          }
+          AdStatDAO.updateBatch(adStatArray.toArray)
+      }
+    }
   }
 
   def generateBlackList(adRealTimeFilterDStream: DStream[String]) = {
@@ -115,7 +168,6 @@ object AdverStat {
       }
     }
 
-    //
     // key2BlackListDStream: DStream[RDD[(key, count)]]
     val key2BlackListDStream = key2CountDStream.filter{
       case (key, count) =>
