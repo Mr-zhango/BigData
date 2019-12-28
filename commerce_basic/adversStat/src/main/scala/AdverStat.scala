@@ -71,8 +71,7 @@ object AdverStat {
     // 验证数据消费
     // adRealTimeFilterDStream.foreachRDD(rdd => rdd.foreach(println(_)))
     // 需求一：实时维护黑名单
-//    generateBlackList(adRealTimeFilterDStream)
-//
+    generateBlackList(adRealTimeFilterDStream)
     streamingContext.start()
     streamingContext.awaitTermination()
   }
