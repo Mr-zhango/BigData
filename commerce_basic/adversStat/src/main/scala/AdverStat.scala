@@ -81,8 +81,49 @@ object AdverStat {
     // 需求三：统计各省Top3热门广告
     proveinceTope3Adver(sparkSession, key2ProvinceCityCountDStream)
 
+    // 需求四：最近一个小时广告点击量统计
+    getRecentHourClickCount(adRealTimeFilterDStream)
+
     streamingContext.start()
     streamingContext.awaitTermination()
+  }
+
+  def getRecentHourClickCount(adRealTimeFilterDStream: DStream[String]) = {
+    val key2TimeMinuteDStream = adRealTimeFilterDStream.map{
+      // log: timestamp province city userId adid
+      case log =>
+        val logSplit = log.split(" ")
+        val timeStamp = logSplit(0).toLong
+        // yyyyMMddHHmm
+        val timeMinute = DateUtils.formatTimeMinute(new Date(timeStamp))
+        val adid = logSplit(4).toLong
+
+        val key = timeMinute + "_" + adid
+
+        (key, 1L)
+    }
+
+    val key2WindowDStream = key2TimeMinuteDStream.reduceByKeyAndWindow((a:Long, b:Long)=>(a+b), Minutes(60), Minutes(1))
+
+    key2WindowDStream.foreachRDD{
+      rdd => rdd.foreachPartition{
+        // (key, count)
+        items=>
+          val trendArray = new ArrayBuffer[AdClickTrend]()
+          for((key, count) <- items){
+            val keySplit = key.split("_")
+            // yyyyMMddHHmm
+            val timeMinute = keySplit(0)
+            val date = timeMinute.substring(0, 8)
+            val hour = timeMinute.substring(8,10)
+            val minute = timeMinute.substring(10)
+            val adid  = keySplit(1).toLong
+
+            trendArray += AdClickTrend(date, hour, minute, adid, count)
+          }
+          AdClickTrendDAO.updateBatch(trendArray.toArray)
+      }
+    }
   }
 
   def proveinceTope3Adver(sparkSession: SparkSession,
