@@ -36,6 +36,7 @@ object LoginFailWithCep {
     var loginFailDataStream = patternStream.select(
       (pattern: Map[String, Iterable[LoginEvent]]) => {
 
+        val begin = pattern.getOrElse("begin", null).iterator.next()
         val next = pattern.getOrElse("next", null).iterator.next()
         (next.userId, next.ip, next.eventType)
 
