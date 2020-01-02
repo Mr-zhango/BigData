@@ -12,6 +12,8 @@
     <!-- 实时的热门商品统计子模块 -->
     <modules>
         <module>HotItemsAnalysis</module>
+        <module>NetworkTrafficAnalysis</module>
+        <module>LoginFailDetect</module>
     </modules>
 
     <!-- 统一版本管理 -->
