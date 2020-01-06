@@ -10,7 +10,7 @@ class MyData {
     }
 
     //请注意，此时number前面是加了volatile关键字修饰的
-    public void addPlusPlus() {
+    public synchronized void addPlusPlus() {
         number++;
     }
 }
@@ -34,13 +34,14 @@ public class VolatileDemo {
         MyData myData = new MyData();
 
         // 开启了20个线程
-        for (int i = 0; i < 20; i++) {
+        for (int i = 1; i <= 20; i++) {
             new Thread(() -> {
 
                 // 每个线程加1000次
-                for (int j = 1; j < 1000; j++) {
+                for (int j = 1; j <= 1000; j++) {
                     myData.addPlusPlus();
                 }
+                System.out.println(Thread.currentThread().getName());
 
             }, String.valueOf(i)).start();
         }
