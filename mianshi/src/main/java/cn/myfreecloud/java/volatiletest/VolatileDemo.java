@@ -45,7 +45,13 @@ public class VolatileDemo {
             }, String.valueOf(i)).start();
         }
         // 需要等待上面的20个线程全部计算完后，再用main线程取得最终的结果值看是多少
-        seeOkByVolatile();
+        while(Thread.activeCount() >2){
+            Thread.yield();
+        }
+        //main	 finally number value: 19504
+        //main	 finally number value: 19857
+        System.out.println(Thread.currentThread().getName() + "\t finally number value: " + myData.number);
+        //seeOkByVolatile();
     }
 
     // 验证Volatile的可见性 开始
