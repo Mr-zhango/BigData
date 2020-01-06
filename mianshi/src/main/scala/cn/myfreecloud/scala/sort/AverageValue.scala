@@ -1,4 +1,4 @@
-package cn.myfreecloud.sort
+package cn.myfreecloud.scala.sort
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}

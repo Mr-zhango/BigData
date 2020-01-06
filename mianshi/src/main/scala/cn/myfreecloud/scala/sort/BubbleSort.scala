@@ -1,4 +1,4 @@
-package cn.myfreecloud.sort
+package cn.myfreecloud.scala.sort
 
 object BubbleSort {
   //  冒泡排序

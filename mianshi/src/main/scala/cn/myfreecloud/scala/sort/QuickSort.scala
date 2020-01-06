@@ -1,4 +1,4 @@
-package cn.myfreecloud.sort
+package cn.myfreecloud.scala.sort
 
 object QuickSort {
   def main(args: Array[String]): Unit = {
