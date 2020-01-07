@@ -1,6 +1,7 @@
 package cn.myfreecloud.java.volatiletest;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class MyData {
     volatile int number = 0;
@@ -9,10 +10,19 @@ class MyData {
         this.number = 60;
     }
 
-    //请注意，此时number前面是加了volatile关键字修饰的
-    public synchronized void addPlusPlus() {
+    //请注意，此时number前面是加了volatile关键字修饰的(写太快了,造成了写值丢失的情况) 加上synchronized之后就力度过大,当前只能有一个线程操作
+    public void addPlusPlus() {
         number++;
     }
+
+    // 默认就是0 ,写了就用写的值
+    AtomicInteger atomicInteger = new AtomicInteger();
+
+    public void addMyAtomic(){
+        // 原子性的 +1
+        atomicInteger.getAndIncrement();
+    }
+
 }
 
 /**
@@ -40,6 +50,7 @@ public class VolatileDemo {
                 // 每个线程加1000次
                 for (int j = 1; j <= 1000; j++) {
                     myData.addPlusPlus();
+                    myData.addMyAtomic();
                 }
                 System.out.println(Thread.currentThread().getName());
 
@@ -51,7 +62,8 @@ public class VolatileDemo {
         }
         //main	 finally number value: 19504
         //main	 finally number value: 19857
-        System.out.println(Thread.currentThread().getName() + "\t finally number value: " + myData.number);
+        System.out.println(Thread.currentThread().getName() + "\t int type , finally number value: " + myData.number);
+        System.out.println(Thread.currentThread().getName() + "\t AtomicInteger type , finally number value: " + myData.atomicInteger);
         //seeOkByVolatile();
     }
 
