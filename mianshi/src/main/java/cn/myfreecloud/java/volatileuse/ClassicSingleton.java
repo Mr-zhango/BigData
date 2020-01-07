@@ -11,7 +11,7 @@ public class ClassicSingleton {
         System.out.println(Thread.currentThread().getName() + "\t 我是构造方法 ClassicSingleton()");
     }
 
-    public static ClassicSingleton getInstance() {
+    public static synchronized ClassicSingleton getInstance() {
         if (instance == null) {
             instance = new ClassicSingleton();
         }
