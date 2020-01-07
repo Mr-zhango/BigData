@@ -4,7 +4,8 @@ package cn.myfreecloud.java.volatileuse;
  * 经典的单例模式的演示 - 懒汉模式
  */
 public class ClassicSingleton {
-    private static ClassicSingleton instance = null;
+    // 禁止指令重排,防止出现线程不安全的问题
+    private static volatile ClassicSingleton instance = null;
 
     private ClassicSingleton() {
         // 单机版单线程下只会被打印一次,被构造一次
@@ -12,8 +13,8 @@ public class ClassicSingleton {
     }
 
 
-    // synchronized 太重了,严重影响服务器性能,我们应该采用DCL模式 Double Check Lock 双端检索机制
-    // 双端检索机制就是在加锁的前后都进行一次判断
+    // synchronized 太重了,严重影响服务器性能,我们应该采用DCL模式 Double Check Lock 双端检锁机制
+    // 双端检锁机制就是在加锁的前后都进行一次判断
     public static ClassicSingleton getInstance() {
         // 卫生间没人了,才进去
         if (instance == null) {
