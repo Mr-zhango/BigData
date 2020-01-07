@@ -11,9 +11,20 @@ public class ClassicSingleton {
         System.out.println(Thread.currentThread().getName() + "\t 我是构造方法 ClassicSingleton()");
     }
 
-    public static synchronized ClassicSingleton getInstance() {
+
+    // synchronized 太重了,严重影响服务器性能,我们应该采用DCL模式 Double Check Lock 双端检索机制
+    // 双端检索机制就是在加锁的前后都进行一次判断
+    public static ClassicSingleton getInstance() {
+        // 卫生间没人了,才进去
         if (instance == null) {
-            instance = new ClassicSingleton();
+
+            // 使用同步代码块的方式来保证线程安全  // 给单间上锁
+            synchronized (ClassicSingleton.class){
+                // 加锁之前和加锁之后都进行一次判断 // 推门测试上锁
+                if (instance == null) {
+                    instance = new ClassicSingleton();
+                }
+            }
         }
         return instance;
     }
