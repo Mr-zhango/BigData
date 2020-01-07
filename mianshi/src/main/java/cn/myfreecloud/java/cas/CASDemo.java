@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *  缺点:
  *  1.底层实现自旋锁,需要多次比较,循环时间长,开销大如果CAS失败,会一直进行尝试,如果CAS长时间不成功,可能会给CPU带来很大的开销
  *  2.只能保证一个共享变量的原子操作,对于多个共享变量时循环CAS就无法保证操作的原子性,这个时候就可以用锁来保证原子性
- *  3.引出ABA问题
+ *  3.引出ABA问题 -> 原子引用更新 ->如何规避ABA问题
  *
  */
 public class CASDemo {
