@@ -20,6 +20,7 @@ class MyData {
 
     public void addMyAtomic(){
         // 原子性的 +1
+        // getAndIncrement 保证原子性对的原因就是底层实现就是CAS
         atomicInteger.getAndIncrement();
     }
 
