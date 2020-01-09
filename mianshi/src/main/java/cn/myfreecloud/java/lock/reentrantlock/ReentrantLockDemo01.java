@@ -1,4 +1,4 @@
-package cn.myfreecloud.java.lock;
+package cn.myfreecloud.java.lock.reentrantlock;
 
 /**
  *  本案例说明 synchronized 是一个典型的可重用锁

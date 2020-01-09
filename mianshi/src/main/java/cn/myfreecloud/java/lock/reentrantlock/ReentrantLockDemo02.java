@@ -1,4 +1,4 @@
-package cn.myfreecloud.java.lock;
+package cn.myfreecloud.java.lock.reentrantlock;
 
 
 import java.util.concurrent.TimeUnit;
