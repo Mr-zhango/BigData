@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 本案例说明 ReentrantLock 是一个典型的可重用锁
+ * 本案例说明 ReentrantLock 是一个典型的可重入锁
  */
 
 class ReentrantPhone implements Runnable {
