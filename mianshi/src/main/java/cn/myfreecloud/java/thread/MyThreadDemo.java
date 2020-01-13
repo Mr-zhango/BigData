@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 线程池demo
+ * 线程池demo jdk版的
  * 第四种获得多线程的方式,线程池
  */
 public class MyThreadDemo {
@@ -21,6 +21,7 @@ public class MyThreadDemo {
 
         try {
             for (int i = 1; i <=10 ; i++) {
+                // execute() 方法,叫下一个客户
                 threadPool.execute(()->{
                     System.out.println(Thread.currentThread().getName() + "\t 办理业务");
                 });
