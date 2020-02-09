@@ -45,6 +45,15 @@ package cn.myfreecloud.java.jvm;
  *          打印GC信息
  *      -XX:+UseSerialGC
  *
+ *      -XX:SurvivorRation
+ *          它定义了新生代中Eden区域和Survivor区域（From幸存区或To幸存区）的比例，默认为8，也就是说Eden占新生代的8/10，From幸存区和To幸存区各占新生代的1/10
+ *      -XX:NewRation
+ *          老年代：新生代=4，即old：(Eden + Survivor from + Survivor to) ，则说明新生代为整个堆区的1/5
+ *          ps：XX:NewRation和Xmn的区别：都使用来指定新生代的大小，但区别在于Xmn是固定的，二XX:NewRation则是一个比值，即会随着堆区的内存的大小的变化而变化
+ *       -XX:MaxTenuringThreshold
+ *          设置垃圾的最大年龄 默认是15,需要经过15次垃圾回收,从新生带去到养老区,必须在0-15之间
+ *
+ *
  *  常用参数设置
  *  -Xms128m -Xmx4096m -Xss1024k -XX:MetaSpaceSize=512m -XX:+PrintCommandLineFlags -XX:+PrintGCDetails -XX:+UseSerialGC
  *
