@@ -57,7 +57,27 @@ package cn.myfreecloud.java.jvm;
  *  常用参数设置
  *  -Xms128m -Xmx4096m -Xss1024k -XX:MetaSpaceSize=512m -XX:+PrintCommandLineFlags -XX:+PrintGCDetails -XX:+UseSerialGC
  *
- *
+ *  -XX:+DisableExplicitGC
+ *  -XX:G1ReservePercent=25
+ *  -XX:GCLogFileSize=104857600
+ *  -XX:+HeapDumpOnOutOfMemoryError
+ *  -XX:HeapDumpPath=/data/apps/app_name/logs/java.hprof
+ *  -XX:InitialHeapSize=268435456
+ *  -XX:InitiatingHeapOccupancyPercent=40
+ *  -XX:MaxDirectMemorySize=1073741824
+ *  -XX:MaxGCPauseMillis=200
+ *  -XX:MaxHeapSize=268435456
+ *  -XX:NumberOfGCLogFiles=10
+ *  -XX:-OmitStackTraceInFastThrow
+ *  -XX:+PrintCommandLineFlags
+ *  -XX:+PrintGC
+ *  -XX:+PrintGCDateStamps
+ *  -XX:+PrintGCTimeStamps
+ *  -XX:ThreadStackSize=256
+ *  -XX:+UseCompressedClassPointers
+ *  -XX:+UseCompressedOops
+ *  -XX:+UseG1GC
+ *  -XX:+UseGCLogFileRotation
  *
  */
 public class JvmParamDemo {
